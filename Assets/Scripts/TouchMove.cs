@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TouchMove : MonoBehaviour
 {
+    public Vector3 touchPosition;
     private void Update()
     {
         if (Input.touchCount > 0)
@@ -13,10 +14,10 @@ public class TouchMove : MonoBehaviour
 
             if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
             {
-                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10));
-                transform.position = touchPosition;
+                touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10));
+
+                transform.position = Vector3.Lerp(transform.position,touchPosition, 10 * Time.deltaTime);
             }
         }
     }
 }
-
